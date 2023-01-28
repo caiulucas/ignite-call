@@ -1,9 +1,12 @@
-import './globals.css'
+'use client';
+import { globalStyles } from '@/styles/global';
+
+globalStyles();
 
 export default function RootLayout({
-  children,
+  children
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="en">
@@ -14,5 +17,5 @@ export default function RootLayout({
       <head />
       <body>{children}</body>
     </html>
-  )
+  );
 }
