@@ -1,11 +1,13 @@
 'use client';
 
-import { useSearchParams } from 'next/navigation';
+import { AxiosError } from 'axios';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { ArrowRight } from 'phosphor-react';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
+import { api } from '@/lib/axios';
 import { Button, Heading, MultiStep, Text, TextInput } from '@ignite-ui/react';
 
 import { Form, FormError, Header } from './styles';
@@ -32,6 +34,7 @@ export default function Register() {
   } = useForm<RegisterFormData>();
 
   const searchParams = useSearchParams();
+  const router = useRouter();
 
   useEffect(() => {
     const username = searchParams.get('username');
@@ -40,7 +43,15 @@ export default function Register() {
   }, [searchParams, setValue]);
 
   async function handleRegister(data: RegisterFormData) {
-    console.log(data);
+    try {
+      await api.post('/users', data);
+
+      await router.push('/register/connect-calendar');
+    } catch (err) {
+      if (err instanceof AxiosError && err?.response?.data?.message) {
+        alert(err.response.data.message);
+      }
+    }
   }
 
   return (
@@ -79,7 +90,7 @@ export default function Register() {
           )}
         </label>
 
-        <Button type="submit">
+        <Button type="submit" disabled={isSubmitting}>
           Próximo passo <ArrowRight />
         </Button>
       </Form>

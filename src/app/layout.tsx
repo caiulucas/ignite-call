@@ -1,4 +1,6 @@
 'use client';
+import { SessionProvider } from 'next-auth/react';
+
 import { globalStyles } from '@/styles/global';
 
 globalStyles();
@@ -15,7 +17,9 @@ export default function RootLayout({
         head.tsx. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head
       */}
       <head />
-      <body>{children}</body>
+      <body>
+        <SessionProvider>{children}</SessionProvider>
+      </body>
     </html>
   );
 }
