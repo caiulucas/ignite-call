@@ -21,7 +21,7 @@ export default function Register() {
   return (
     <>
       <Header>
-        <Heading>Conecte sua agenda!</Heading>
+        <Heading as="strong">Conecte sua agenda!</Heading>
         <Text>
           Conecte seu calendário para verificar automaticamente as horas
           ocupadas e os novos eventos à medida em que são agendados.

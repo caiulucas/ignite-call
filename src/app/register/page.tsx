@@ -57,7 +57,7 @@ export default function Register() {
   return (
     <>
       <Header>
-        <Heading>Bem-vindo ao Ignite Call!</Heading>
+        <Heading as="strong">Bem-vindo ao Ignite Call!</Heading>
         <Text>
           Precisamos de algumas informações para criar seu perfil! Ah, você pode
           editar essas informações depois.
