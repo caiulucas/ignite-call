@@ -1,4 +1,5 @@
 'use client';
+import { useRouter } from 'next/navigation';
 import { ArrowRight } from 'phosphor-react';
 import { Controller, useFieldArray, useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -87,6 +88,7 @@ export default function TimeIntervals() {
   });
 
   const intervals = watch('intervals');
+  const router = useRouter();
 
   const { fields } = useFieldArray({
     control,
@@ -97,6 +99,7 @@ export default function TimeIntervals() {
     const data = values as TimeIntervalsFormOutput;
 
     await api.post('/users/time-intervals', data);
+    router.push('/register/update-profile');
   }
 
   return (

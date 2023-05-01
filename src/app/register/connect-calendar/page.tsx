@@ -1,13 +1,13 @@
 'use client';
 
 import { signIn, useSession } from 'next-auth/react';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { ArrowRight, Check } from 'phosphor-react';
 
 import { Button, Heading, MultiStep, Text } from '@ignite-ui/react';
 
 import { Header } from '../styles';
-import { ConnectBox, ConnectItem, AuthError } from './styles';
+import { AuthError, ConnectBox, ConnectItem } from './styles';
 
 export default function Register() {
   const session = useSession();
@@ -15,8 +15,11 @@ export default function Register() {
 
   const hasAuthError = searchParams.get('error');
   const isSignedIn = session.status === 'authenticated';
+  const router = useRouter();
 
-  console.log(session);
+  function handleNavigateToNextStep() {
+    router.push('/register/time-intervals');
+  }
 
   return (
     <>
@@ -55,7 +58,7 @@ export default function Register() {
           </AuthError>
         )}
 
-        <Button disabled={!isSignedIn}>
+        <Button onClick={handleNavigateToNextStep} disabled={!isSignedIn}>
           Próximo passo <ArrowRight />
         </Button>
       </ConnectBox>
