@@ -1,3 +1,6 @@
 {
-  "extends": ["eslint-config-terralab", "next/core-web-vitals"]
+  "extends": ["eslint-config-terralab", "next/core-web-vitals"],
+  "rules": {
+    "jsx-a11y/label-has-associated-control": "off"
+  }
 }
