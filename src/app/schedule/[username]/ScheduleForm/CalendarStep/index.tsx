@@ -1,9 +1,10 @@
 import dayjs from 'dayjs';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { Calendar } from '@/components/Calendar';
 import { api } from '@/lib/axios';
+import { useQuery } from '@tanstack/react-query';
 
 import {
   Container,
@@ -18,13 +19,30 @@ interface Availability {
   availableTimes: number[];
 }
 
+interface LoadAvailabilityParams {
+  username: string;
+  selectedDate: string;
+}
+
+async function loadAvailability({
+  username,
+  selectedDate
+}: LoadAvailabilityParams): Promise<Availability> {
+  const { data } = await api.get(`/users/${username}/availability`, {
+    params: {
+      date: dayjs(selectedDate).format('YYYY-MM-DD')
+    }
+  });
+
+  return data;
+}
+
 export function CalendarStep() {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>();
-  const [availability, setAvailability] = useState<Availability | undefined>();
 
   const pathname = usePathname();
 
-  const username = pathname?.replace('/schedule/', '');
+  const username = pathname?.replace('/schedule/', '') ?? '';
 
   const isDateSelected = !!selectedDate;
   const weekDay = selectedDate ? dayjs(selectedDate).format('dddd') : '';
@@ -32,21 +50,21 @@ export function CalendarStep() {
     ? dayjs(selectedDate).format('DD[ de ]MMMM')
     : '';
 
-  useEffect(() => {
-    if (!selectedDate) return;
+  const selectedDateWithoutTime = selectedDate
+    ? dayjs(selectedDate).format('YYYY-MM-DD')
+    : '';
 
-    async function loadAvailability() {
-      const { data } = await api.get(`/users/${username}/availability`, {
-        params: {
-          date: dayjs(selectedDate).format('YYYY-MM-DD')
-        }
-      });
-
-      setAvailability(data);
+  const { data: availability } = useQuery(
+    ['availability', selectedDateWithoutTime],
+    async () =>
+      await loadAvailability({
+        username,
+        selectedDate: selectedDateWithoutTime
+      }),
+    {
+      enabled: !!selectedDate
     }
-
-    loadAvailability();
-  }, [selectedDate, username]);
+  );
 
   return (
     <Container isTimePickerOpen={isDateSelected}>

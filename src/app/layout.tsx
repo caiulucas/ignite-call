@@ -3,7 +3,9 @@ import '@/lib/dayjs';
 
 import { SessionProvider } from 'next-auth/react';
 
+import { queryClient } from '@/lib/react-query';
 import { globalStyles } from '@/styles/global';
+import { QueryClientProvider } from '@tanstack/react-query';
 
 globalStyles();
 
@@ -20,7 +22,11 @@ export default function RootLayout({
       */}
       <head />
       <body>
-        <SessionProvider>{children}</SessionProvider>
+        <SessionProvider>
+          <QueryClientProvider client={queryClient}>
+            {children}
+          </QueryClientProvider>
+        </SessionProvider>
       </body>
     </html>
   );
