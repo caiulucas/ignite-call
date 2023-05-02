@@ -50,7 +50,6 @@ export default function UpdateProfile() {
     router.push(`/schedule/${session?.user.username}`);
   }
 
-  console.log(session);
   return (
     <>
       <Header>
