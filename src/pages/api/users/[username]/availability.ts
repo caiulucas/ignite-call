@@ -53,12 +53,15 @@ export default async function handler(
     }
   });
 
-  const availableTimes = possibleTimes.filter(
-    (time) =>
-      !blockedTimes.some(
-        (blockedTime) => dayjs(blockedTime.date).hour() === time
-      )
-  );
+  const availableTimes = possibleTimes.filter((time) => {
+    const isTimeBlocked = blockedTimes.some(
+      (blockedTime) => dayjs(blockedTime.date).hour() === time
+    );
+
+    const isTimeInPast = referenceDate.set('hour', time).isBefore(dayjs());
+
+    return !isTimeBlocked && !isTimeInPast;
+  });
 
   return res.json({ possibleTimes, availableTimes });
 }
