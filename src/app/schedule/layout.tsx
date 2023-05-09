@@ -1,9 +1,7 @@
 import { Metadata } from 'next';
 
-import { ClientLayout } from './client-layout';
-
 export const metadata: Metadata = {
-  title: 'Crie uma conta | Ignite Call'
+  title: 'Agende seu horário | Ignite Call'
 };
 
 export default function RootLayout({
@@ -14,9 +12,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head />
-      <body>
-        <ClientLayout>{children}</ClientLayout>
-      </body>
+      <body>{children}</body>
     </html>
   );
 }

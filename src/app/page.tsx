@@ -1,36 +1,12 @@
-'use client';
-import Image from 'next/image';
+import { Metadata } from 'next';
 
-import previewImage from '@/assets/app-preview.png';
-import { Heading, Text } from '@ignite-ui/react';
+import { ClientHome } from './client';
 
-import { ClaimUsernameForm } from '../components/ClaimUsernameForm';
-import { Container, Hero, Preview } from './styles';
-
+export const metadata: Metadata = {
+  title: 'Descomplique sua agenda | Ignite Call',
+  description:
+    'Conecte seu calendário e permita que as pessoas marquem agendamentos no seu tempo livre.'
+};
 export default function Home() {
-  return (
-    <Container>
-      <Hero>
-        <Heading as="h1" size="4xl">
-          Agendamento descomplicado
-        </Heading>
-        <Text size="xl">
-          Conecte seu calendário e permita que as pessoas marquem agendamentos
-          no seu tempo livre.
-        </Text>
-
-        <ClaimUsernameForm />
-      </Hero>
-
-      <Preview>
-        <Image
-          src={previewImage}
-          height={400}
-          quality={100}
-          priority
-          alt="Calendário simbolizando aplicação em funcionamento."
-        />
-      </Preview>
-    </Container>
-  );
+  return <ClientHome />;
 }

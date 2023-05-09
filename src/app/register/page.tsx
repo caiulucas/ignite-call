@@ -37,7 +37,7 @@ export default function Register() {
   const router = useRouter();
 
   useEffect(() => {
-    const username = searchParams.get('username');
+    const username = searchParams?.get('username') || '';
 
     if (username) setValue('username', username);
   }, [searchParams, setValue]);
