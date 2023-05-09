@@ -13,7 +13,7 @@ export default function Register() {
   const session = useSession();
   const searchParams = useSearchParams();
 
-  const hasAuthError = searchParams.get('error');
+  const hasAuthError = searchParams?.get('error') || '';
   const isSignedIn = session.status === 'authenticated';
   const router = useRouter();
 
