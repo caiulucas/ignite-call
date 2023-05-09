@@ -24,7 +24,6 @@ interface CalendarWeek {
 }
 
 interface CalendarProps {
-  selectedDate?: Date;
   username: string;
   onDateChange?: (date: Date) => void;
 }
@@ -54,11 +53,7 @@ async function loadBlockedDates({
 
   return data;
 }
-export function Calendar({
-  username,
-  selectedDate,
-  onDateChange
-}: CalendarProps) {
+export function Calendar({ username, onDateChange }: CalendarProps) {
   const [currentDate, setCurrentDate] = useState(() => dayjs().set('date', 1));
 
   const currentMonth = currentDate.format('MMMM');
